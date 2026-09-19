@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="mr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>‘भूल’ – एक घेणे</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"IBM Plex Sans Devanagari"', '"IBM Plex Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    .doc-content {
+      text-align: justify;
+      text-justify: inter-word;
+      word-break: normal;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+    /* Smooth transitions for theme switching */
+    * {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+    }
+    /* SVG animation keyframes */
+    @keyframes pulseAura {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.06); opacity: 0.45; }
+    }
+    @keyframes floatMind {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+    @keyframes orbitNode {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -40; }
+    }
+    .aura-local {
+      animation: pulseAura 4s ease-in-out infinite;
+      transform-origin: 250px 220px;
+    }
+    .aura-regional {
+      animation: pulseAura 6s ease-in-out infinite reverse;
+      transform-origin: 250px 220px;
+    }
+    .aura-general {
+      animation: pulseAura 8s ease-in-out infinite;
+      transform-origin: 250px 220px;
+    }
+    .floating-core {
+      animation: floatMind 5s ease-in-out infinite;
+    }
+    .pulse-flow {
+      stroke-dasharray: 6 6;
+      animation: dashFlow 2s linear infinite;
+    }
+  </style>
+</head>
+<body class="bg-neutral-100 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen py-6 px-4 sm:px-6 lg:px-8 flex justify-center">
+
+  <main class="w-full max-w-3xl bg-white dark:bg-neutral-900 shadow-xl border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-10 md:p-12 relative my-4">
+    
+    <!-- Action controls: Share & Theme Switcher -->
+    <div class="flex justify-end items-center gap-2 mb-8">
+      <!-- Share Button -->
+      <button id="shareButton" type="button" aria-label="Share" class="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 active:scale-95 shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </button>
+
+      <!-- Theme Toggle Button -->
+      <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 active:scale-95 shadow-sm">
+        <!-- Sun icon (shown in dark mode) -->
+        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mb-10 w-full flex justify-center">
+      <svg class="w-full max-w-md h-auto rounded-2xl shadow-inner bg-gradient-to-b from-teal-500/10 via-indigo-500/10 to-purple-500/10 border border-neutral-200/60 dark:border-neutral-800" viewBox="0 0 500 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three protective mindful auras of anesthesia illustration">
+        <defs>
+          <linearGradient id="gradGeneral" x1="50" y1="50" x2="450" y2="350" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.1"/>
+          </linearGradient>
+          <linearGradient id="gradRegional" x1="100" y1="90" x2="400" y2="330" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.2"/>
+          </linearGradient>
+          <linearGradient id="gradLocal" x1="160" y1="130" x2="340" y2="290" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#10B981" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.3"/>
+          </linearGradient>
+          <linearGradient id="lotusCore" x1="200" y1="160" x2="300" y2="270" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F59E0B"/>
+            <stop offset="50%" stop-color="#EC4899"/>
+            <stop offset="100%" stop-color="#6366F1"/>
+          </linearGradient>
+          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- General Layer: Outermost mental shield -->
+        <circle class="aura-general" cx="250" cy="200" r="150" fill="url(#gradGeneral)" stroke="#8B5CF6" stroke-width="1.8" stroke-dasharray="8 6"/>
+
+        <!-- Regional Layer: Mid-boundary aura -->
+        <circle class="aura-regional" cx="250" cy="200" r="105" fill="url(#gradRegional)" stroke="#06B6D4" stroke-width="2" stroke-dasharray="5 5"/>
+
+        <!-- Local Layer: Immediate mindful boundary -->
+        <circle class="aura-local" cx="250" cy="200" r="65" fill="url(#gradLocal)" stroke="#10B981" stroke-width="2.2"/>
+
+        <!-- Flowing harmonic connection waves -->
+        <path class="pulse-flow" d="M 120 200 C 180 140, 320 140, 380 200" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path class="pulse-flow" d="M 120 200 C 180 260, 320 260, 380 200" stroke="#A78BFA" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+        <!-- Mindful Meditating Center / Serene Mind Silhouette -->
+        <g class="floating-core" filter="url(#glow)">
+          <!-- Glowing Lotus / Mind petals -->
+          <path d="M 250 140 C 265 175, 290 195, 300 220 C 275 220, 260 205, 250 190 C 240 205, 225 220, 200 220 C 210 195, 235 175, 250 140 Z" fill="url(#lotusCore)" opacity="0.9"/>
+          <path d="M 250 155 C 235 185, 175 195, 170 230 C 205 235, 235 210, 250 190 Z" fill="#38BDF8" opacity="0.75"/>
+          <path d="M 250 155 C 265 185, 325 195, 330 230 C 295 235, 265 210, 250 190 Z" fill="#A855F7" opacity="0.75"/>
+          <!-- Meditating Soul Silhouette Base -->
+          <circle cx="250" cy="180" r="11" fill="#FFFFFF"/>
+          <path d="M 234 235 C 234 205, 266 205, 266 235 Z" fill="#FFFFFF" opacity="0.95"/>
+          <!-- Third eye / Mind sparkle -->
+          <circle cx="250" cy="178" r="2.5" fill="#F59E0B"/>
+        </g>
+
+        <!-- Ambient synapse points -->
+        <circle cx="205" cy="120" r="3.5" fill="#34D399" opacity="0.8"/>
+        <circle cx="295" cy="120" r="3.5" fill="#A78BFA" opacity="0.8"/>
+        <circle cx="365" cy="220" r="4" fill="#38BDF8" opacity="0.8"/>
+        <circle cx="135" cy="220" r="4" fill="#F472B6" opacity="0.8"/>
+        <circle cx="250" cy="330" r="4.5" fill="#818CF8" opacity="0.8"/>
+      </svg>
+    </div>
+
+    <article class="doc-content space-y-6 text-base sm:text-lg leading-relaxed sm:leading-loose text-neutral-800 dark:text-neutral-200">
+      <div class="text-center font-bold text-2xl sm:text-3xl text-neutral-900 dark:text-neutral-100 tracking-wide pb-2">
+        ‘भूल’ – एक घेणे..
+      </div>
+
+      <p>
+        'भूल' या शब्दाचे संदर्भानुसार अनेक अर्थ होतात. मुख्यत्वेकरून या शब्दाचा अर्थ चूक, अनावधानाने झालेली कृती, भ्रम, बेशुद्धी अथवा विस्मरण होणे असा घेतला जातो.
+      </p>
+
+      <p>
+        फसवणूक करण्यासाठी किंवा लक्ष विचलित करण्यासाठी केलेली युक्ती यासाठी ‘भूलथाप’ तर दिशाभूल करणाऱ्या रचनेसाठी ‘भूल भुलैया’ हा शब्दप्रयोग वापरला जातो.
+      </p>
+
+      <p>
+        वैद्यकीय भाषेत 'भूल देणे' म्हणजेच ॲनेस्थेशिया. शस्त्रक्रिया करताना किंवा काही वैद्यकीय तपासण्यांदरम्यान रुग्णाला वेदना किंवा <em>discomfort </em>होऊ नये म्हणून जाणीवपूर्वक ‘भूल’ दिली जाते.
+      </p>
+
+      <p>
+        वैद्यकीय भूल तीन प्रकारची असते. <em>Local, Regional</em> आणि <em>General</em>. अगदी किरकोळ गोष्टींसाठी लोकल आणि त्याहून थोड्या जास्त बाबतीत रिजनल. यात शरीराच्या ‘भुलविलेल्या’ जागी संवेदना जाणवत नाहीत. जनरल अनेस्थेशिया दिला की मात्र पूर्ण बेशुद्धी येते आणि भुलीचा अंमल असताना काय झाले हे काही कळत नाही.
+      </p>
+
+      <div class="text-center text-xl font-bold tracking-widest text-neutral-400 dark:text-neutral-600 py-1 select-none">
+        ***
+      </div>
+
+      <p>
+        आपल्या रोजच्या जीवनात मानसिक पातळीवर सदासर्वदा सर्व काही ‘आल इज वेल’ नसते. नित्य संपर्कातील, समाजातील व्यक्ती, वस्तू आणि घडणाऱ्या घटना यांच्या सोबत होणाऱ्या आपल्या <em>interactions </em> प्रसंगी मानसिक वेदना आणि <em>discomforts </em>निर्माण करत असतात.
+      </p>
+
+      <p>
+        यात कधी आपली ‘भूल’ असते तर कधी काही ‘भूल-थापेस’ बळी पडून आपण नसत्या ‘भूल-भुलैया’त अडकतो. काही व्यक्तींच्या बाबतीत चुकीच्या सवयींमुळे एक प्रकारची मानसिक बेशुद्धी देखील आलेली असू शकते.
+      </p>
+
+      <p>
+        यातील आपल्याकडून झालेली साधी भूल क्षम्य असते. बऱ्याचदा ती सुधारणे शक्य असते. परंतु <em>पुण्यातले वाहनचालक सर्व नियम पाळतील आणि म्हणून वाहन चालवणे सुखकर असेल असे मानून रस्त्यावर ‘उतरणे’ हे म्हणजे दुसरे तिसरे काही नसून एका गोड भूलथापेस बळी पडून ‘भूल-भुलैया’त अडकणे!</em>
+      </p>
+
+      <p>
+        <em>Self-inflicted (Mental) General Anaesthesiaचा</em> अंमल असेल तर त्यातून बाहेर येणे हे मात्र विधात्याच्या इच्छेवर अवलंबून असते असेच म्हणावे लागेल.
+      </p>
+
+      <div class="text-center text-xl font-bold tracking-widest text-neutral-400 dark:text-neutral-600 py-1 select-none">
+        ***
+      </div>
+
+      <p>
+        आता या आतापर्यंतच्या शा‍ब्दिक भूल-भुलैयात <strong>“भूल - एक घेणे”</strong> म्हणजे नक्की काय?
+      </p>
+
+      <p>
+        तर ते आहे आपणच आपल्याला - आयुष्य शक्य तितके मजेत राहावे म्हणून - वर्तमानात रहात जाणीवपूर्वक लावून घेतलेल्या मानसिक सवयींची इंजेक्शन विरहित ‘भूल’ टोचत राहणे.
+      </p>
+
+      <p>
+        <em>म्हणजेच -</em>
+      </p>
+
+      <p>
+        समाजात वावरताना क्वचित किंवा अगदी थोड्या कालावधीसाठी संपर्कात येणाऱ्या काही व्यक्ती, वस्तू आणि घटना; ज्या आपल्याला नकोशा असतात पण टाळता येत नाहीत त्यांच्या बाबतीत तेवढ्यापुरते दुर्लक्ष करणे आणि त्यांना तिथेच सोडून देऊन पुढे जाण्याचा <strong>“लोकल अनेस्थेशिया”.</strong>
+      </p>
+
+      <p>
+        घरातील, नात्यातील, नित्य संपर्कातील पण आपल्या दृष्टिकोनातून उपद्रवी असलेल्या व्यक्तींच्या बरोबरच्या नात्यात चुपचाप आपल्या बाजूने जाणीवपूर्वक एक प्रकारचे अदृश्य अंतर राखण्याचा <strong>“रिजनल अनेस्थेशिया”.</strong>
+      </p>
+
+      <p>
+        <em>आणि</em>
+      </p>
+
+      <p>
+        ज्या व्यक्ती गोष्टी, घटना आणि वस्तू यांच्यात काही सकारात्मक बदल घडवणे <em>way beyond our capacity </em>आहे हे आपल्याला नीट कळले आहे त्यांना <em>(उदाहरणार्थ भारतातील कोणत्याही शहरातील ट्रॅफिक, बेशिस्त आणि कचरा या समस्या)</em> शक्य तितक्या प्रमाणात दृष्टी, विचार आणि मना-आड करण्याचा <strong>“जनरल अनेस्थेशिया”. </strong>
+      </p>
+
+      <p>
+        वैद्यकीय भूल देताना ती प्रक्रिया सुरक्षित व्हावी म्हणून जसे डॉक्टरांच्या सूचनांचे पालन करणे अत्यंत गरजेचे असते त्याप्रमाणे ही आपणच स्वतःसाठी वेळोवेळी टोचून घ्यायची <em>‘मानसिक भूलोपचार पद्धती’</em> अंगिकारण्या साठी मुळात आपले मानसिक स्वास्थ्य काही एका किमान पातळीवर आणणे श्रेयस्कर असते.
+      </p>
+
+      <p>
+        ते मिळवण्यासाठी प्रामाणिकपणे चांगल्या सवयी जोपासणे आणि ध्यान-धारणेची नियमित साधना इतक्याच माफक <em>prerequisites </em>आहेत. त्यासाठी ‘नीट’ वगैरे देऊन ‘क्वालिफाईड अनेस्थेटिस्ट’ व्हावे लागत नाही हे सांगणे न-लगे.
+      </p>
+
+      <div class="text-2xl pt-2 select-none">
+        😊
+      </div>
+
+      <div class="pt-1 select-none">
+        <em>२०२६०७१७</em>
+      </div>
+    </article>
+
+    <!-- Toast notification -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 px-5 py-2.5 rounded-xl text-sm font-medium shadow-2xl opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      const sunIcon = document.getElementById('sunIcon');
+      const moonIcon = document.getElementById('moonIcon');
+      const shareButton = document.getElementById('shareButton');
+      const toast = document.getElementById('toast');
+
+      // Theme toggle functionality
+      function updateThemeIcons(isDark) {
+        if (isDark) {
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        } else {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        }
+      }
+
+      const isDarkMode = html.classList.contains('dark');
+      updateThemeIcons(isDarkMode);
+
+      themeToggle.addEventListener('click', function () {
+        html.classList.toggle('dark');
+        const currentIsDark = html.classList.contains('dark');
+        updateThemeIcons(currentIsDark);
+      });
+
+      // Toast feedback helper
+      let toastTimer = null;
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.remove('opacity-0', 'pointer-events-none');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.add('opacity-0', 'pointer-events-none');
+        }, 2200);
+      }
+
+      // Share button with Web Share API and Clipboard fallback
+      shareButton.addEventListener('click', function () {
+        const shareData = {
+          title: '‘भूल’ – एक घेणे',
+          text: '‘भूल’ – एक घेणे.. \nमानसिक पातळीवरील जाणीवपूर्वक घेतलेली ‘भूल’.',
+          url: window.location.href
+        };
+
+        if (navigator.share && typeof navigator.share === 'function') {
+          navigator.share(shareData).catch(function (err) {
+            // User cancelled share or operation unsupported
+          });
+        } else {
+          // Clipboard fallback without alert()
+          const tempInput = document.createElement('input');
+          tempInput.style.position = 'fixed';
+          tempInput.style.opacity = '0';
+          tempInput.value = window.location.href;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          try {
+            document.execCommand('copy');
+            showToast('लिंक कॉपी झाली आहे!');
+          } catch (e) {
+            showToast('कॉपी करणे शक्य झाले नाही');
+          }
+          document.body.removeChild(tempInput);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
