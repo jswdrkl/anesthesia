@@ -1,345 +1,407 @@
 <!DOCTYPE html>
-<html lang="mr" class="dark">
+<html lang="mr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>‘भूल’ – एक घेणे</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>‘भूल’ – एक घेणे..</title>
+  
+  <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Sans+Devanagari:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"IBM Plex Sans Devanagari"', '"IBM Plex Sans"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+    :root {
+      --bg-color: #fcfbfa;
+      --card-bg: #ffffff;
+      --text-color: #2c3038;
+      --border-color: #eee7dd;
+      --shadow-color: rgba(60, 40, 20, 0.05);
+      --theme-btn-bg: #f3eee7;
+      --theme-btn-text: #4a453f;
+      --share-btn-bg: #f5f0ea;
+      --share-btn-hover: #ebe4db;
+      --share-btn-border: #dfd7cc;
+      --share-btn-text: #3c352d;
+      --toast-bg: #333333;
+      --toast-text: #ffffff;
     }
-    .doc-content {
-      text-align: justify;
-      text-justify: inter-word;
+
+    [data-theme="dark"] {
+      --bg-color: #121417;
+      --card-bg: #1c1f24;
+      --text-color: #e2e4e8;
+      --border-color: #2b313a;
+      --shadow-color: rgba(0, 0, 0, 0.4);
+      --theme-btn-bg: #272c34;
+      --theme-btn-text: #d2d6dd;
+      --share-btn-bg: #2a303a;
+      --share-btn-hover: #353c48;
+      --share-btn-border: #3d4654;
+      --share-btn-text: #e6e9ef;
+      --toast-bg: #f5f5f5;
+      --toast-text: #1a1a1a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.85;
       word-break: normal;
       overflow-wrap: break-word;
       word-wrap: break-word;
       hyphens: none;
       -webkit-hyphens: none;
     }
-    /* Smooth transitions for theme switching */
-    * {
-      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 10px 30px var(--shadow-color);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    /* SVG animation keyframes */
-    @keyframes pulseAura {
-      0%, 100% { transform: scale(1); opacity: 0.85; }
-      50% { transform: scale(1.06); opacity: 0.45; }
+
+    @media (max-width: 500px) {
+      .container {
+        padding: 24px 18px;
+        border-radius: 16px;
+      }
     }
-    @keyframes floatMind {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-7px); }
+
+    .theme-toggle-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
     }
-    @keyframes orbitNode {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+
+    .theme-toggle {
+      background: var(--theme-btn-bg);
+      color: var(--theme-btn-text);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
     }
-    @keyframes dashFlow {
-      to { stroke-dashoffset: -40; }
+
+    .theme-toggle:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
     }
-    .aura-local {
-      animation: pulseAura 4s ease-in-out infinite;
-      transform-origin: 250px 220px;
+
+    .graphic-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 24px;
     }
-    .aura-regional {
-      animation: pulseAura 6s ease-in-out infinite reverse;
-      transform-origin: 250px 220px;
+
+    .title {
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.7rem;
+      margin-bottom: 24px;
+      color: inherit;
+      letter-spacing: 0.2px;
     }
-    .aura-general {
-      animation: pulseAura 8s ease-in-out infinite;
-      transform-origin: 250px 220px;
+
+    p {
+      text-align: justify;
+      margin-bottom: 16px;
+      font-size: 1.05rem;
     }
-    .floating-core {
-      animation: floatMind 5s ease-in-out infinite;
+
+    .centered {
+      text-align: center;
     }
-    .pulse-flow {
-      stroke-dasharray: 6 6;
-      animation: dashFlow 2s linear infinite;
+
+    .symbol-divider {
+      letter-spacing: 4px;
+      margin: 22px 0;
+      font-size: 1.1rem;
+    }
+
+    b, strong {
+      font-weight: 700;
+    }
+
+    i, em {
+      font-style: italic;
+    }
+
+    .share-container {
+      margin-top: 36px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .share-button {
+      background-color: var(--share-btn-bg);
+      color: var(--share-btn-text);
+      border: 1px solid var(--share-btn-border);
+      border-radius: 24px;
+      padding: 10px 24px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 3px 10px var(--shadow-color);
+      transition: background-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .share-button:hover {
+      background-color: var(--share-btn-hover);
+      transform: translateY(-2px);
+    }
+
+    .share-button:active {
+      transform: translateY(0);
+    }
+
+    .share-button svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
     }
   </style>
 </head>
-<body class="bg-neutral-100 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 min-h-screen py-6 px-4 sm:px-6 lg:px-8 flex justify-center">
+<body>
 
-  <main class="w-full max-w-3xl bg-white dark:bg-neutral-900 shadow-xl border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 sm:p-10 md:p-12 relative my-4">
-    
-    <!-- Action controls: Share & Theme Switcher -->
-    <div class="flex justify-end items-center gap-2 mb-8">
-      <!-- Share Button -->
-      <button id="shareButton" type="button" aria-label="Share" class="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 active:scale-95 shadow-sm">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="5" r="3"></circle>
-          <circle cx="6" cy="12" r="3"></circle>
-          <circle cx="18" cy="19" r="3"></circle>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-      </button>
-
-      <!-- Theme Toggle Button -->
-      <button id="themeToggle" type="button" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 active:scale-95 shadow-sm">
-        <!-- Sun icon (shown in dark mode) -->
-        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <!-- Moon icon (shown in light mode) -->
-        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
+  <div class="container">
+    <div class="theme-toggle-wrapper">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark</span>
       </button>
     </div>
 
-    <div class="mb-10 w-full flex justify-center">
-      <svg class="w-full max-w-md h-auto rounded-2xl shadow-inner bg-gradient-to-b from-teal-500/10 via-indigo-500/10 to-purple-500/10 border border-neutral-200/60 dark:border-neutral-800" viewBox="0 0 500 380" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three protective mindful auras of anesthesia illustration">
+    <!-- Animated Light Colorful SVG Graphic -->
+    <div class="graphic-container">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          .pulse-layer {
+            transform-origin: center;
+            animation: pulse-ring 4s ease-in-out infinite alternate;
+          }
+          .orbit-layer {
+            transform-origin: center;
+            animation: gentle-spin 18s linear infinite;
+          }
+          .inner-glow {
+            transform-origin: center;
+            animation: breathe 3s ease-in-out infinite alternate;
+          }
+          @keyframes pulse-ring {
+            0% { transform: scale(0.92); opacity: 0.45; }
+            100% { transform: scale(1.08); opacity: 0.85; }
+          }
+          @keyframes gentle-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          @keyframes breathe {
+            0% { transform: scale(0.95); opacity: 0.85; }
+            100% { transform: scale(1.05); opacity: 1; }
+          }
+        </style>
         <defs>
-          <linearGradient id="gradGeneral" x1="50" y1="50" x2="450" y2="350" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.1"/>
+          <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#FFD166" />
+            <stop offset="55%" stop-color="#F7A072" />
+            <stop offset="100%" stop-color="#EE6C4D" stop-opacity="0.2" />
+          </radialGradient>
+          <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#70C1B3" />
+            <stop offset="50%" stop-color="#B298DC" />
+            <stop offset="100%" stop-color="#F4A261" />
           </linearGradient>
-          <linearGradient id="gradRegional" x1="100" y1="90" x2="400" y2="330" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.5"/>
-            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.2"/>
-          </linearGradient>
-          <linearGradient id="gradLocal" x1="160" y1="130" x2="340" y2="290" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#10B981" stop-opacity="0.6"/>
-            <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.3"/>
-          </linearGradient>
-          <linearGradient id="lotusCore" x1="200" y1="160" x2="300" y2="270" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#F59E0B"/>
-            <stop offset="50%" stop-color="#EC4899"/>
-            <stop offset="100%" stop-color="#6366F1"/>
-          </linearGradient>
-          <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
         </defs>
 
-        <!-- General Layer: Outermost mental shield -->
-        <circle class="aura-general" cx="250" cy="200" r="150" fill="url(#gradGeneral)" stroke="#8B5CF6" stroke-width="1.8" stroke-dasharray="8 6"/>
+        <!-- Dynamic Ripples -->
+        <circle class="pulse-layer" cx="60" cy="60" r="48" fill="#FCEADE" fill-opacity="0.3" stroke="#F4A261" stroke-width="1.2" stroke-dasharray="3 4"/>
+        <circle class="pulse-layer" cx="60" cy="60" r="38" stroke="#70C1B3" stroke-width="1.5" stroke-dasharray="6 4" style="animation-delay: -1.5s;"/>
 
-        <!-- Regional Layer: Mid-boundary aura -->
-        <circle class="aura-regional" cx="250" cy="200" r="105" fill="url(#gradRegional)" stroke="#06B6D4" stroke-width="2" stroke-dasharray="5 5"/>
-
-        <!-- Local Layer: Immediate mindful boundary -->
-        <circle class="aura-local" cx="250" cy="200" r="65" fill="url(#gradLocal)" stroke="#10B981" stroke-width="2.2"/>
-
-        <!-- Flowing harmonic connection waves -->
-        <path class="pulse-flow" d="M 120 200 C 180 140, 320 140, 380 200" stroke="#38BDF8" stroke-width="1.5" fill="none" opacity="0.6"/>
-        <path class="pulse-flow" d="M 120 200 C 180 260, 320 260, 380 200" stroke="#A78BFA" stroke-width="1.5" fill="none" opacity="0.6"/>
-
-        <!-- Mindful Meditating Center / Serene Mind Silhouette -->
-        <g class="floating-core" filter="url(#glow)">
-          <!-- Glowing Lotus / Mind petals -->
-          <path d="M 250 140 C 265 175, 290 195, 300 220 C 275 220, 260 205, 250 190 C 240 205, 225 220, 200 220 C 210 195, 235 175, 250 140 Z" fill="url(#lotusCore)" opacity="0.9"/>
-          <path d="M 250 155 C 235 185, 175 195, 170 230 C 205 235, 235 210, 250 190 Z" fill="#38BDF8" opacity="0.75"/>
-          <path d="M 250 155 C 265 185, 325 195, 330 230 C 295 235, 265 210, 250 190 Z" fill="#A855F7" opacity="0.75"/>
-          <!-- Meditating Soul Silhouette Base -->
-          <circle cx="250" cy="180" r="11" fill="#FFFFFF"/>
-          <path d="M 234 235 C 234 205, 266 205, 266 235 Z" fill="#FFFFFF" opacity="0.95"/>
-          <!-- Third eye / Mind sparkle -->
-          <circle cx="250" cy="178" r="2.5" fill="#F59E0B"/>
+        <!-- Orbiting awareness dots -->
+        <g class="orbit-layer">
+          <ellipse cx="60" cy="60" rx="42" ry="26" stroke="url(#orbitGrad)" stroke-width="1.4" opacity="0.75" />
+          <circle cx="98" cy="48" r="4" fill="#B298DC" />
+          <circle cx="22" cy="72" r="3.5" fill="#70C1B3" />
+          <circle cx="60" cy="18" r="3" fill="#F4A261" />
         </g>
 
-        <!-- Ambient synapse points -->
-        <circle cx="205" cy="120" r="3.5" fill="#34D399" opacity="0.8"/>
-        <circle cx="295" cy="120" r="3.5" fill="#A78BFA" opacity="0.8"/>
-        <circle cx="365" cy="220" r="4" fill="#38BDF8" opacity="0.8"/>
-        <circle cx="135" cy="220" r="4" fill="#F472B6" opacity="0.8"/>
-        <circle cx="250" cy="330" r="4.5" fill="#818CF8" opacity="0.8"/>
+        <!-- Centered Calm Mind Core -->
+        <circle class="inner-glow" cx="60" cy="60" r="19" fill="url(#sunGrad)" />
+        <circle cx="60" cy="60" r="7.5" fill="#FFFFFF" fill-opacity="0.9" />
       </svg>
     </div>
 
-    <article class="doc-content space-y-6 text-base sm:text-lg leading-relaxed sm:leading-loose text-neutral-800 dark:text-neutral-200">
-      <div class="text-center font-bold text-2xl sm:text-3xl text-neutral-900 dark:text-neutral-100 tracking-wide pb-2">
-        ‘भूल’ – एक घेणे..
-      </div>
+    <!-- Title -->
+    <div class="title">‘भूल’ – एक घेणे..</div>
 
-      <p>
-        'भूल' या शब्दाचे संदर्भानुसार अनेक अर्थ होतात. मुख्यत्वेकरून या शब्दाचा अर्थ चूक, अनावधानाने झालेली कृती, भ्रम, बेशुद्धी अथवा विस्मरण होणे असा घेतला जातो.
-      </p>
+    <!-- Document Content -->
+    <p>'भूल' या शब्दाचे संदर्भानुसार अनेक अर्थ होतात. मुख्यत्वेकरून या शब्दाचा अर्थ चूक, अनावधानाने झालेली कृती, भ्रम, बेशुद्धी अथवा विस्मरण होणे असा घेतला जातो.</p>
 
-      <p>
-        फसवणूक करण्यासाठी किंवा लक्ष विचलित करण्यासाठी केलेली युक्ती यासाठी ‘भूलथाप’ तर दिशाभूल करणाऱ्या रचनेसाठी ‘भूल भुलैया’ हा शब्दप्रयोग वापरला जातो.
-      </p>
+    <p>फसवणूक करण्यासाठी किंवा लक्ष विचलित करण्यासाठी केलेली युक्ती यासाठी ‘भूलथाप’ तर दिशाभूल करणाऱ्या रचनेसाठी ‘भूल भुलैया’ हा शब्दप्रयोग वापरला जातो.</p>
 
-      <p>
-        वैद्यकीय भाषेत 'भूल देणे' म्हणजेच ॲनेस्थेशिया. शस्त्रक्रिया करताना किंवा काही वैद्यकीय तपासण्यांदरम्यान रुग्णाला वेदना किंवा <em>discomfort </em>होऊ नये म्हणून जाणीवपूर्वक ‘भूल’ दिली जाते.
-      </p>
+    <p>वैद्यकीय भाषेत 'भूल देणे' म्हणजेच ॲनेस्थेशिया. शस्त्रक्रिया करताना किंवा काही वैद्यकीय तपासण्यांदरम्यान रुग्णाला वेदना किंवा <i>discomfort</i> होऊ नये म्हणून जाणीवपूर्वक ‘भूल’ दिली जाते.</p>
 
-      <p>
-        वैद्यकीय भूल तीन प्रकारची असते. <em>Local, Regional</em> आणि <em>General</em>. अगदी किरकोळ गोष्टींसाठी लोकल आणि त्याहून थोड्या जास्त बाबतीत रिजनल. यात शरीराच्या ‘भुलविलेल्या’ जागी संवेदना जाणवत नाहीत. जनरल अनेस्थेशिया दिला की मात्र पूर्ण बेशुद्धी येते आणि भुलीचा अंमल असताना काय झाले हे काही कळत नाही.
-      </p>
+    <p>वैद्यकीय भूल तीन प्रकारची असते. <i>Local, Regional</i> आणि <i>General</i>. अगदी किरकोळ गोष्टींसाठी लोकल आणि त्याहून थोड्या जास्त बाबतीत रिजनल. यात शरीराच्या ‘भुलविलेल्या’ जागी संवेदना जाणवत नाहीत. जनरल अनेस्थेशिया दिला की मात्र पूर्ण बेशुद्धी येते आणि भुलीचा अंमल असताना काय झाले हे काही कळत नाही.</p>
 
-      <div class="text-center text-xl font-bold tracking-widest text-neutral-400 dark:text-neutral-600 py-1 select-none">
-        ***
-      </div>
+    <p class="centered symbol-divider">⌛⌛⌛</p>
 
-      <p>
-        आपल्या रोजच्या जीवनात मानसिक पातळीवर सदासर्वदा सर्व काही ‘आल इज वेल’ नसते. नित्य संपर्कातील, समाजातील व्यक्ती, वस्तू आणि घडणाऱ्या घटना यांच्या सोबत होणाऱ्या आपल्या <em>interactions </em> प्रसंगी मानसिक वेदना आणि <em>discomforts </em>निर्माण करत असतात.
-      </p>
+    <p>आपल्या रोजच्या जीवनात मानसिक पातळीवर सदासर्वदा सर्व काही ‘आल इज वेल’ नसते. नित्य संपर्कातील, समाजातील व्यक्ती, वस्तू आणि घडणाऱ्या घटना यांच्या सोबत होणाऱ्या आपल्या <i>interactions</i> प्रसंगी मानसिक वेदना आणि <i>discomforts</i> निर्माण करत असतात.</p>
 
-      <p>
-        यात कधी आपली ‘भूल’ असते तर कधी काही ‘भूल-थापेस’ बळी पडून आपण नसत्या ‘भूल-भुलैया’त अडकतो. काही व्यक्तींच्या बाबतीत चुकीच्या सवयींमुळे एक प्रकारची मानसिक बेशुद्धी देखील आलेली असू शकते.
-      </p>
+    <p>यात कधी आपली ‘भूल’ असते तर कधी काही ‘भूल-थापेस’ बळी पडून आपण नसत्या ‘भूल-भुलैया’त अडकतो. काही व्यक्तींच्या बाबतीत चुकीच्या सवयींमुळे एक प्रकारची मानसिक बेशुद्धी देखील आलेली असू शकते.</p>
 
-      <p>
-        यातील आपल्याकडून झालेली साधी भूल क्षम्य असते. बऱ्याचदा ती सुधारणे शक्य असते. परंतु <em>पुण्यातले वाहनचालक सर्व नियम पाळतील आणि म्हणून वाहन चालवणे सुखकर असेल असे मानून रस्त्यावर ‘उतरणे’ हे म्हणजे दुसरे तिसरे काही नसून एका गोड भूलथापेस बळी पडून ‘भूल-भुलैया’त अडकणे!</em>
-      </p>
+    <p>यातील आपल्याकडून झालेली साधी भूल क्षम्य असते. बऱ्याचदा ती सुधारणे शक्य असते. परंतु <i>पुण्यातले वाहनचालक सर्व नियम पाळतील आणि म्हणून वाहन चालवणे सुखकर असेल असे मानून रस्त्यावर ‘उतरणे’ हे म्हणजे दुसरे तिसरे काही नसून एका गोड भूलथापेस बळी पडून ‘भूल-भुलैया’त अडकणे!</i></p>
 
-      <p>
-        <em>Self-inflicted (Mental) General Anaesthesiaचा</em> अंमल असेल तर त्यातून बाहेर येणे हे मात्र विधात्याच्या इच्छेवर अवलंबून असते असेच म्हणावे लागेल.
-      </p>
+    <p><i>Self-inflicted (Mental) General Anaesthesiaचा</i> अंमल असेल तर त्यातून बाहेर येणे हे मात्र विधात्याच्या इच्छेवर अवलंबून असते असेच म्हणावे लागेल.</p>
 
-      <div class="text-center text-xl font-bold tracking-widest text-neutral-400 dark:text-neutral-600 py-1 select-none">
-        ***
-      </div>
+    <p class="centered symbol-divider">⌛⌛⌛</p>
 
-      <p>
-        आता या आतापर्यंतच्या शा‍ब्दिक भूल-भुलैयात <strong>“भूल - एक घेणे”</strong> म्हणजे नक्की काय?
-      </p>
+    <p>आता या आतापर्यंतच्या शा‍ब्दिक भूल-भुलैयात <b>“भूल - एक घेणे”</b> म्हणजे नक्की काय?</p>
 
-      <p>
-        तर ते आहे आपणच आपल्याला - आयुष्य शक्य तितके मजेत राहावे म्हणून - वर्तमानात रहात जाणीवपूर्वक लावून घेतलेल्या मानसिक सवयींची इंजेक्शन विरहित ‘भूल’ टोचत राहणे.
-      </p>
+    <p>तर ते आहे आपणच आपल्याला - आयुष्य शक्य तितके मजेत राहावे म्हणून - वर्तमानात रहात जाणीवपूर्वक लावून घेतलेल्या मानसिक सवयींची इंजेक्शन विरहित ‘भूल’ टोचत राहणे.</p>
 
-      <p>
-        <em>म्हणजेच -</em>
-      </p>
+    <p><i>म्हणजेच -</i></p>
 
-      <p>
-        समाजात वावरताना क्वचित किंवा अगदी थोड्या कालावधीसाठी संपर्कात येणाऱ्या काही व्यक्ती, वस्तू आणि घटना; ज्या आपल्याला नकोशा असतात पण टाळता येत नाहीत त्यांच्या बाबतीत तेवढ्यापुरते दुर्लक्ष करणे आणि त्यांना तिथेच सोडून देऊन पुढे जाण्याचा <strong>“लोकल अनेस्थेशिया”.</strong>
-      </p>
+    <p>समाजात वावरताना क्वचित किंवा अगदी थोड्या कालावधीसाठी संपर्कात येणाऱ्या काही व्यक्ती, वस्तू आणि घटना; ज्या आपल्याला नकोशा असतात पण टाळता येत नाहीत त्यांच्या बाबतीत तेवढ्यापुरते दुर्लक्ष करणे आणि त्यांना तिथेच सोडून देऊन पुढे जाण्याचा <b>“लोकल अनेस्थेशिया”.</b></p>
 
-      <p>
-        घरातील, नात्यातील, नित्य संपर्कातील पण आपल्या दृष्टिकोनातून उपद्रवी असलेल्या व्यक्तींच्या बरोबरच्या नात्यात चुपचाप आपल्या बाजूने जाणीवपूर्वक एक प्रकारचे अदृश्य अंतर राखण्याचा <strong>“रिजनल अनेस्थेशिया”.</strong>
-      </p>
+    <p>घरातील, नात्यातील, नित्य संपर्कातील पण आपल्या दृष्टिकोनातून उपद्रवी असलेल्या व्यक्तींच्या बरोबरच्या नात्यात चुपचाप आपल्या बाजूने जाणीवपूर्वक एक प्रकारचे अदृश्य अंतर राखण्याचा <b>“रिजनल अनेस्थेशिया”.</b></p>
 
-      <p>
-        <em>आणि</em>
-      </p>
+    <p><i>आणि</i></p>
 
-      <p>
-        ज्या व्यक्ती गोष्टी, घटना आणि वस्तू यांच्यात काही सकारात्मक बदल घडवणे <em>way beyond our capacity </em>आहे हे आपल्याला नीट कळले आहे त्यांना <em>(उदाहरणार्थ भारतातील कोणत्याही शहरातील ट्रॅफिक, बेशिस्त आणि कचरा या समस्या)</em> शक्य तितक्या प्रमाणात दृष्टी, विचार आणि मना-आड करण्याचा <strong>“जनरल अनेस्थेशिया”. </strong>
-      </p>
+    <p>ज्या व्यक्ती गोष्टी, घटना आणि वस्तू यांच्यात काही सकारात्मक बदल घडवणे <i>way beyond our capacity</i> आहे हे आपल्याला नीट कळले आहे त्यांना शक्य तितक्या प्रमाणात दृष्टी, विचार आणि मना-आड करण्याचा <b>“जनरल अनेस्थेशिया”.</b></p>
 
-      <p>
-        वैद्यकीय भूल देताना ती प्रक्रिया सुरक्षित व्हावी म्हणून जसे डॉक्टरांच्या सूचनांचे पालन करणे अत्यंत गरजेचे असते त्याप्रमाणे ही आपणच स्वतःसाठी वेळोवेळी टोचून घ्यायची <em>‘मानसिक भूलोपचार पद्धती’</em> अंगिकारण्या साठी मुळात आपले मानसिक स्वास्थ्य काही एका किमान पातळीवर आणणे श्रेयस्कर असते.
-      </p>
+    <p class="centered symbol-divider">⌛⌛</p>
 
-      <p>
-        ते मिळवण्यासाठी प्रामाणिकपणे चांगल्या सवयी जोपासणे आणि ध्यान-धारणेची नियमित साधना इतक्याच माफक <em>prerequisites </em>आहेत. त्यासाठी ‘नीट’ वगैरे देऊन ‘क्वालिफाईड अनेस्थेटिस्ट’ व्हावे लागत नाही हे सांगणे न-लगे.
-      </p>
+    <p>वैद्यकीय भूल देताना ती प्रक्रिया सुरक्षित व्हावी म्हणून जसे डॉक्टरांच्या सूचनांचे पालन करणे अत्यंत गरजेचे असते त्याप्रमाणे ही आपणच स्वतःसाठी वेळोवेळी टोचून घ्यायची <i>‘मानसिक भूलोपचार पद्धती’</i> अंगिकारण्या साठी मुळात आपले मानसिक स्वास्थ्य काही एका किमान पातळीवर आणणे श्रेयस्कर असते.</p>
 
-      <div class="text-2xl pt-2 select-none">
-        😊
-      </div>
+    <p>ते मिळवण्यासाठी प्रामाणिकपणे चांगल्या सवयी जोपासणे आणि ध्यान-धारणेची नियमित साधना इतक्याच माफक <i>prerequisites</i> आहेत. त्यासाठी ‘नीट’ वगैरे देऊन ‘क्वालिफाईड अनेस्थेटिस्ट’ व्हावे लागत नाही हे सांगणे न-लगे.</p>
 
-      <div class="pt-1 select-none">
-        <em>२०२६०७१७</em>
-      </div>
-    </article>
+    <p class="centered">😊</p>
+    <p class="centered"><i>२०२६०७१७</i></p>
+    <p class="centered">⌛</p>
 
-    <!-- Toast notification -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 px-5 py-2.5 rounded-xl text-sm font-medium shadow-2xl opacity-0 pointer-events-none transition-opacity duration-300 z-50">
+    <!-- Light Coloured Share Button -->
+    <div class="share-container">
+      <button class="share-button" id="shareBtn">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92z"/>
+        </svg>
+        <span>Share</span>
+      </button>
     </div>
-  </main>
+  </div>
+
+  <div class="toast" id="toast">Link copied to clipboard!</div>
 
   <script>
-    (function () {
-      const html = document.documentElement;
-      const themeToggle = document.getElementById('themeToggle');
-      const sunIcon = document.getElementById('sunIcon');
-      const moonIcon = document.getElementById('moonIcon');
-      const shareButton = document.getElementById('shareButton');
-      const toast = document.getElementById('toast');
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    const htmlEl = document.documentElement;
 
-      // Theme toggle functionality
-      function updateThemeIcons(isDark) {
-        if (isDark) {
-          sunIcon.classList.remove('hidden');
-          moonIcon.classList.add('hidden');
-        } else {
-          sunIcon.classList.add('hidden');
-          moonIcon.classList.remove('hidden');
-        }
+    themeToggle.addEventListener('click', () => {
+      const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        htmlEl.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = 'Dark';
+      } else {
+        htmlEl.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Light';
       }
+    });
 
-      const isDarkMode = html.classList.contains('dark');
-      updateThemeIcons(isDarkMode);
+    // Share action
+    const shareBtn = document.getElementById('shareBtn');
+    const toast = document.getElementById('toast');
 
-      themeToggle.addEventListener('click', function () {
-        html.classList.toggle('dark');
-        const currentIsDark = html.classList.contains('dark');
-        updateThemeIcons(currentIsDark);
-      });
+    shareBtn.addEventListener('click', async () => {
+      const shareData = {
+        title: '‘भूल’ – एक घेणे..',
+        text: '‘भूल’ – एक घेणे..',
+        url: window.location.href
+      };
 
-      // Toast feedback helper
-      let toastTimer = null;
-      function showToast(message) {
-        toast.textContent = message;
-        toast.classList.remove('opacity-0', 'pointer-events-none');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () {
-          toast.classList.add('opacity-0', 'pointer-events-none');
-        }, 2200);
-      }
-
-      // Share button with Web Share API and Clipboard fallback
-      shareButton.addEventListener('click', function () {
-        const shareData = {
-          title: '‘भूल’ – एक घेणे',
-          text: '‘भूल’ – एक घेणे.. \nमानसिक पातळीवरील जाणीवपूर्वक घेतलेली ‘भूल’.',
-          url: window.location.href
-        };
-
-        if (navigator.share && typeof navigator.share === 'function') {
-          navigator.share(shareData).catch(function (err) {
-            // User cancelled share or operation unsupported
-          });
-        } else {
-          // Clipboard fallback without alert()
-          const tempInput = document.createElement('input');
-          tempInput.style.position = 'fixed';
-          tempInput.style.opacity = '0';
-          tempInput.value = window.location.href;
-          document.body.appendChild(tempInput);
-          tempInput.select();
-          try {
-            document.execCommand('copy');
-            showToast('लिंक कॉपी झाली आहे!');
-          } catch (e) {
-            showToast('कॉपी करणे शक्य झाले नाही');
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (err) {
+          if (err.name !== 'AbortError') {
+            copyToClipboard();
           }
-          document.body.removeChild(tempInput);
         }
+      } else {
+        copyToClipboard();
+      }
+    });
+
+    function copyToClipboard() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Link copied to clipboard!');
+      }).catch(() => {
+        showToast('Unable to copy link');
       });
-    })();
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
   </script>
 </body>
 </html>
